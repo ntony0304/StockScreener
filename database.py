@@ -16,14 +16,44 @@ class Database():
             self.connection.close()
         except: #if the table exist just skip
             pass
+    def database_connection(self):
+        self.connection = sqlite3.connect(self.db_setting.database_file_location)
+        return  self.connection
+
     def insert_data(self, stock, date, open, high, low, close, volume):
-        cur = self.connection.cursor()
-        query = '''INSERT INTO stocks VALUES ( {} , {}, {}, {}, {}, {}, {} )  '''.format(stock,date,open,high,low,close,volume)
+        conn = self.database_connection()
+        cur = conn.cursor()
+        query = '''INSERT INTO stocks VALUES ( ? , ?, ?, ?, ?, ?, ? ) '''
 
         try:
-            cur.execute(query)
-            self.connection.commit()
+            cur.execute(query,(stock,date,open,high,low,close,volume))
+            conn.commit()
+        except:
+            err = traceback.format_exc()
+            print()
+        cur.close()
+        conn.close()
+
+    def retrieve_row(self):
+        query ='''SELECT * FROM stocks WHERE  stock = ?'''
+        conn = self.database_connection()
+        cur = conn.cursor()
+        try:
+            cur.execute(query, ("MCD",))
         except:
             pass
-        cur.close()
-        self.connection.close()
+        row_data = cur.fetchone()
+        conn.close()
+        return row_data
+
+    def retrieve_rows(self):
+        query = '''SELECT * FROM stocks WHERE  stock = "MCD"'''
+        conn = self.database_connection()
+        cur = conn.cursor()
+        try:
+            cur.execute(query)
+        except:
+            pass
+        row_datas = cur.fetchall()
+        conn.close()
+        return row_datas
