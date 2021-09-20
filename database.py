@@ -57,3 +57,31 @@ class Database():
         row_datas = cur.fetchall()
         conn.close()
         return row_datas
+
+    def retrieve_some_rows(self, amount):
+        """return row in dictionary"""
+        query = '''SELECT * FROM stocks WHERE  stock = "MCD"'''
+        conn = self.database_connection()
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        try:
+            cur.execute(query)
+        except:
+            pass
+        row_data = []
+        for row in cur.fetchmany(100):
+            row_data.append((dict(row)))
+        conn.close()
+        return row_data
+
+    def retrieve_rows(self, amount):
+        """return row in list"""
+        query = '''SELECT * FROM stocks WHERE  stock = "MCD"'''
+        conn = self.database_connection()
+
+        cur = conn.cursor()
+        try:
+            cur.execute(query)
+        except:
+            pass
+        return cur.fetchmany(amount)
