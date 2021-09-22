@@ -1,6 +1,8 @@
-from scraper import *
-from datetime import date, datetime
 import screener
+
+import screeners._internal_indicators  as ind
+
+
 def main(setting, database):
     database.create_stock_table() #create the stock table
 
@@ -32,34 +34,41 @@ def main(setting, database):
     my_screener = screener.Screener()  # Screener Object
 
     df = my_screener.create_data_frame(row_data)
-
-    #print(df)
-    df['EMA5'] = my_screener.EMA_indicator(df['close'], 5)
-    df['EMA100'] = my_screener.EMA_indicator(df["close"],100)
     print(df)
 
+    #print(df)
+    df['EMA5'] = ind.ema(df['close'], 5)#Exponential moving average
+    df['EMA100'] = ind.ema(df["close"],100)
+
+    df["simple_test"] = ( (df['close']) > (df["EMA5"]) ) & (df["volume"] > 5000)
+
+    print(df)
+
+    #your statement
 
 
 
 
-'''
-Explaination for 
-def screener(df, choice="A", test=False):
-    # If test. Common Variables were not loaded
-    if test:
-        df['EMA_200'] = ind.ema(df['close'], 200)
-        df['EMA_cond'] = df['close'] > df['EMA_200']
-        df['HH_4'] = ind.highest_high(df, 4)
 
-'''
-#in the program they have a class that will have indicator function
-#to use the class they will create the object, here the object name is ind
-    ind = screener.Indicator()  #construct ind object
-
-    df['EMA_200'] = ind.ema(df['close'], 200) #add indicator to dataframe by calling ema method from object ind
-                        #the input is the close price and the day
-
-
+#
+# '''
+# Explaination for
+# def screener(df, choice="A", test=False):
+#     # If test. Common Variables were not loaded
+#     if test:
+#         df['EMA_200'] = ind.ema(df['close'], 200)
+#         df['EMA_cond'] = df['close'] > df['EMA_200']
+#         df['HH_4'] = ind.highest_high(df, 4)
+#
+# '''
+# #in the program they have a class that will have indicator function
+# #to use the class they will create the object, here the object name is ind
+#     ind = screener.Indicator()  #construct ind object
+#
+#     df['EMA_200'] = ind.ema(df['close'], 200) #add indicator to dataframe by calling ema method from object ind
+#                         #the input is the close price and the day
+#
+#
 
 
 

@@ -10,12 +10,10 @@ class Screener():
                 found_data.append(item)
         return found_data
     def create_data_frame(self, stock_data_row):
-        df = pd.DataFrame(stock_data_row, columns=["date","open","high","low","close","adjusted_close","volume"])
+        df = pd.DataFrame(stock_data_row, columns=["stock", "date","open","high","low","close","volume"])
         return df
 
-    # indicators
-    def EMA_indicator(self, price, day):
-        return price.ewm(span=day).mean() #ewm: Exponential Weighted : var(), std(), cov()
+
 
 
 class Indicator():
