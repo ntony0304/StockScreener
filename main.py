@@ -1,4 +1,4 @@
-
+from app import app
 
 # Press the green button in the gutter to run the script.
 import general_functions
