@@ -33,7 +33,6 @@ with open(r"C:\Users\quang nguyen\PycharmProjects\StockScreener\210930_A&M.csv",
     con = sqlite3.connect(r"C:\Users\quang nguyen\PycharmProjects\StockScreener\new_database.db")
     c= con.cursor()
     for row in csv_reader:
-        # TODO: put the data to the database
         #insert query
         query = '''INSERT INTO stock_data VALUES(?, ?, ?, ?, ?, ?) '''
         try:
