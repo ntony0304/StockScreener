@@ -1,16 +1,10 @@
+import pandas as pd
+
+from screeners.screener import *
 
 
-def print_a():
-    print("a")
-    print_b()
+df = pd.DataFrame() #create dataframe
+#method 1
 
-def print_b():
-    print("b")
-
-class example_class():
-    def __init__(self):
-        pass
-    def print_c(self):
-        print("c")
-
-#print_a()
+screener(df, "B", True)
+screener(df, "B", True)
